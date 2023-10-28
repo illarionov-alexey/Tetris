@@ -1,0 +1,95 @@
+<h2>Queue in Python</h2>
+<h5 id="queue" style="text-align: center;">Queue</h5>
+<p><strong>Queue </strong>is a linear data structure that implements the first-in-first-out (FIFO) principle, meaning that new elements can be added to the back of the queue, while removing an element is only possible from its head. Queue is really just like any real-life line in a supermarket: customers who come first are attended first, while the others are waiting for their turn.</p>
+<p>Typically queue supports the following two basic operations:</p>
+<ul>
+<li><strong>enqueue</strong>, that adds a new element to the back of the queue</li>
+<li><strong>dequeue</strong>, that removes the first element of the queue.</li>
+</ul>
+<p>Sometimes, operations <strong>front</strong> and <strong>rear</strong> are also supported. They return the first and the last element of the queue respectively without removing them.</p>
+<p>In practice, queues are especially useful in threaded programming when information must be exchanged between multiple threads. Queues are at the heart of job schedulers, helping to schedule delayed tasks efficiently while preserving the order in which they must be performed.</p>
+<p>In this topic, you will get familiar with a data structure called queue and how to implement it in Python.</p>
+<h5 id="deque" style="text-align: center;">Deque</h5>
+<p>Before we learn how to implement queue in Python, we should get familiar with one more data structure that is closely related, namely <strong>deque</strong>. Deque stands for<em> 'double-ended queue'</em> and allows for the elements to be added and removed from either side.</p>
+<p>In Python, you can find deque implementation in the <code class="language-python">collections</code> module. The essential methods are <code class="language-python">append(element)</code> and <code class="language-python">appendleft(element)</code>, which add a new element to the right or left side of the deque respectively, as well as <code class="language-python">pop()</code> and <code class="language-python">popleft()</code>, which remove the first element<strong> </strong>from the corresponding side of the deque.</p>
+<p>Let's take a look at the example:</p>
+<pre><code class="language-python">from collections import deque
+
+my_deque = deque()
+
+my_deque.append('Middle')
+my_deque.append('Right')
+
+my_deque.appendleft('Left')
+
+print(my_deque)
+
+# deque(['Left', 'Middle', 'Right'])
+
+print(my_deque.pop())
+
+# Right
+
+print(my_deque)
+
+# deque(['Left', 'Middle'])
+
+print(my_deque.popleft())
+
+# Left
+
+print(my_deque)
+
+# deque(['Middle'])</code></pre>
+<p>Deque is implemented as a doubly linked list, meaning that its elements aren't stored next to each other in memory like the elements of the conventional list. By contrast, only smaller chunks of elements are stored together, and each such chunk stores the references to the previous chunk and to the next one. This architecture enables quicker append and pop operations from both ends of the deque.</p>
+<p></p><div class="alert alert-warning">Constant time for append and pop operations from both ends is achieved by storing pointers to both ends of the doubly linked list.</div><p></p>
+<h5 id="using-collectionsdeque-as-a-queue" style="text-align: center;">Using collections.deque() as a queue</h5>
+<p>Of course, deque can be used as a simple queue. You just need to ignore the fact that you can add elements to the head and remove them from the back.</p>
+<p>Here is an example:</p>
+<pre><code class="language-python">my_queue = deque()
+
+my_queue.appendleft('First')
+my_queue.appendleft('In')
+my_queue.appendleft('First')
+my_queue.appendleft('Out')
+
+print(my_queue)
+
+# Deque(['Out', 'First', 'In', 'First'])
+
+print(my_queue.pop())
+
+# First
+
+print(my_queue.pop())
+
+# In
+
+print(my_queue.pop())
+
+# First
+
+print(my_queue.pop())
+
+# Out</code></pre>
+<p>So, as you can see, we get the elements in the same order as we put them in the queue. Note that if you call <code class="language-python">pop()</code> one more time, you will get an exception because there are no more elements in the queue to be popped:</p>
+<pre><code class="language-python">my_queue.pop()
+
+# IndexError: pop from an empty deque</code></pre>
+<p> To avoid this, you can always check if the queue is non-empty before trying to get the next element from it. This can be done with the help of the <code class="language-python">len()</code> method:</p>
+<pre><code class="language-python">len(my_queue)
+
+# 0
+
+my_queue.append('a')
+len(my_queue)
+
+# 1</code></pre>
+<h5 id="conclusions" style="text-align: center;"> Conclusions</h5>
+<ul>
+<li>Queue is a first-in-first-out data structure.</li>
+<li>Queue is at the heart of job scheduling in parallel computing.</li>
+<li>Deque stands for a double-ended queue. You can add and retrieve elements to/from both sides of the deque.</li>
+<li>In Python, deque is implemented in the <code class="language-python">collections</code> module.</li>
+<li>You can use deque as a queue.</li>
+</ul>
